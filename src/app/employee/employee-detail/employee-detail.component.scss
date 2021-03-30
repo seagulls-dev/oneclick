@@ -1,0 +1,358 @@
+@import "src/app/variables";
+
+:host {
+  max-width: 37em;
+  display: block;
+  margin: 1em auto;
+  border-radius: 4em;
+  overflow: hidden;
+  box-shadow: 0 0 0.3em -0.1em $cfa-medium-grey;
+  margin-bottom: 30vh;
+  background: $cfa-light-grey;
+  height: min-content;
+  min-height: 100%;
+
+  & > *:not(.top-half) {
+    padding: 0 1em;
+  }
+
+}
+
+:host-context(.smallScreen) {
+  max-width: unset;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  font-size: 1.2em;
+  border: none;
+
+  .top-half {
+    flex-direction: column;
+    padding-bottom: 1em;
+  }
+  oc-profile-photo {
+    font-size: 0.8em;
+    margin-bottom: 1em;
+  }
+}
+
+.top-half {
+  padding: 2em 1em;
+  background: $cfa-red-darker;
+  background: $cfa-dark-blue;
+  color: $white;
+  box-shadow: 0 -0.07em 1em -0.1em $cfa-black-red;
+  box-shadow: 0 -0.07em 1em -0.1em $cfa-dark-blue-darker;
+  display: flex;
+
+  button {
+    padding: 0.2em 0.7em;
+    margin-left: .4em;
+    font-size: .8em;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > * {
+    position: relative;
+  }
+  h2 {
+    font-size: 2em;
+    margin: 0;
+  }
+  h3 {
+    color: $white;
+    margin: 0.25em;
+    font-weight: normal;
+  }
+}
+input {
+  text-decoration: none;
+  background: transparent;
+  font-size: 1em;
+  border: none;
+  border-bottom: 0.14em solid transparent;
+  color: $white;
+  text-align: center;
+  width: 100%;
+  transition: border-color 0.2s;
+
+  & + i {
+    position: absolute;
+    right: 0.1em;
+    top: 50%;
+    opacity: 0;
+    transition: opacity 0.1s linear;
+    transform: translateY(-50%);
+    font-size: 0.7em;
+  }
+  &:disabled {
+    color: $white;
+
+    & + i {
+      display: none;
+    }
+  }
+
+  &:hover, &:active, &:focus {
+    border-bottom-color: initial;
+    position: relative;
+    outline: none;
+
+    &:disabled {
+      border-bottom-color: transparent;
+    }
+
+    & + i {
+      opacity: 1;
+    }
+  }
+}
+.phoneNumber.notGroupMeConnected {
+  color: $cfa-red;
+  font-style: italic;
+}
+i + a {
+  margin-left: 0.25em;
+  text-decoration: none;
+  color: inherit;
+  // user-select: text;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.pin {
+  width: 8em;
+
+  & > :first-child {
+    opacity: 1;
+    transition: opacity 0.1s linear;
+    position: absolute;
+    left: 0.2em;
+  }
+  &:hover, &:focus-within {
+    & > :first-child {
+      opacity: 0;
+    }
+  }
+}
+
+.mooLa {
+  margin-top: 1em;
+
+  .reports {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-evenly;
+    overflow: visible;
+  }
+
+  .report {
+    display: flex;
+    flex-direction: column;
+    padding: 1em 2em;
+    border-left: 1px solid $cfa-medium-grey;
+
+    &:nth-child(1) {
+      border-left: none;
+    }
+
+    span {
+      font-size: 2.5em;
+      i {
+        margin-right: 0.2em;
+      }
+    }
+    p {
+      margin-top: 0;
+    }
+    button {
+      margin: 0.2em 0;
+    }
+  }
+
+  #readMore {
+    margin: 1em  ;
+  }
+  .explainations {
+    text-align: left;
+    background: $cfa-red-lighter;
+    border-radius: 0.3em;
+    padding: 0.7em 1.4em;
+    height: 13em;
+    overflow: hidden;
+    transition-property: height, padding;
+    transition: 0.4s ease-out;
+
+    &.hide {
+      height: 0;
+      padding: 0;
+    }
+  }
+}
+
+.scores {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  p {
+    margin: 0 auto 0.4em;
+  }
+}
+.score {
+  flex-basis: 5em;
+  height: 5em;
+  border-radius: 50%;
+  position: relative;
+  margin: 0.7em;
+  border: none;
+  transition: background 0.5s ease-in-out, box-shadow 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: $white;
+  cursor: pointer;
+  box-shadow: 0.1em 0.15em 0.5em -0.3em $cfa-medium-grey-darker;
+
+  &:hover, &:active {
+    box-shadow: 0.2em 0.3em 0.5em -0.15em $cfa-medium-grey-darker;
+  }
+
+  .icons {
+    display: flex;
+    font-size: 1.1em;
+    position: absolute;
+    right: -1.3em;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+  }
+  i {
+    display: none;
+    margin: 0.05em;
+    background: $cfa-dark-blue;
+    color: $white;
+    padding: 0.3em 0.3em 0.4em;
+    border-radius: 50%;
+  }
+}
+
+.qualified {
+  background: $cfa-light-blue;
+}
+.underQualified, .unqualified:not(.noRating) {
+  background: $cfa-red;
+}
+.good .goodIcon,
+.superGood .superGoodIcon {
+  display: block;
+}
+
+.subsection {
+  width: 100%;
+  font-size: 1.4em;
+  margin: 1em 0 0.4em;
+}
+
+.control-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1em;
+
+  .control-card {
+    font-size: 1.2em;
+    width: 12em;
+    background: $white;
+    border-radius: 1em;
+    margin: 0;
+    box-shadow: 0.1em 0.1em 0.3em -0.1em $cfa-medium-grey;
+    padding: 0.5em 0.9em;
+    margin: 0.3em;
+  }
+}
+.destinations .destination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.permissions {
+  .permission {
+    padding: 0 0.7em;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s ease-in-out;
+
+    label {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 2em;
+      transition: 0.2s ease-in-out;
+      transition-property: color, background;
+
+      i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .fa-check {
+        display: none;
+      }
+    }
+  }
+
+  input {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    margin: 0;
+    outline: none;
+
+    &:checked + .permission label {
+      background: $cfa-dark-blue;
+      color: $white;
+
+      .fa-check {
+        display: block;
+      }
+      .fa-square {
+        display: none;
+      }
+    }
+  }
+
+  input:disabled + .permission {
+    opacity: 0.5;
+  }
+
+  input:not(:disabled):checked + .permission label:hover {
+    background: $cfa-red;
+  }
+
+  input:not(:disabled) + .permission label:hover,
+  input:focus:not(:disabled) + .permission label {
+    cursor: pointer;
+    outline: none;
+    background: $cfa-light-blue;
+  }
+}
+
+.history oc-history-event {
+  margin: 0.25em 0;
+}
+
+.extraFunctions > * {
+  margin: 0 0.3em 1em;
+}

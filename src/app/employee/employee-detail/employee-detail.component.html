@@ -1,0 +1,197 @@
+<div class="top-half">
+  <oc-profile-photo size="14.4em">
+    <img  [src]="photoService.getSizedUrl({ employee: employee }, 'preview')"
+          alt="{{ employee?.name }} profile photo"/>
+  </oc-profile-photo>
+  <div class="info">
+    <h2>
+      <input
+        #nickname
+        class='nickname'
+        [placeholder]="employee?.nickname ? employee.getName(true) : 'Nickname'"
+        maxlength="12"
+        [disabled]="!authService.can('editNickname', employee)"
+        [ngModel]="employee?.getName(true)"
+        (blur)="saveNickname(nickname.value)"
+        (keyup.enter)="saveNickname(nickname.value)"/>
+      <i class="fas fa-pen"></i>
+    </h2>
+    <h3>{{ employee?.getPositionString() }}</h3>
+
+    <!-- TODO: allow some to edit these values based on authService.can('editProfile', employee) -->
+
+    <h3 *ngIf="phone" class="phoneNumber" [class.notGroupMeConnected]="isNotGroupMeConnected(employee)">
+      <i class="fas fa-phone{{ isNotGroupMeConnected(employee) ? '-slash' : '' }}"></i>
+      <a href="tel:{{phone.number}}">{{ phone.formatted }}</a>
+      <button (click)="employee?.resetGroupMeData()"
+        *ngIf="canUseTopHalfResetGroupMeButton(employee)">
+          <i class="fas fa-sync-alt"></i>
+      </button>
+    </h3>
+    <h3 *ngIf="email" class="emailAddress">
+      <i class="fas fa-envelope"></i>
+      <a href="mailto:{{email}}">{{ email }}</a>
+      <button (click)="linkToAnotherEmail()"
+        *ngIf="canUseTopHalfLinkEmailButton(employee)">
+          <i class="fas fa-pen"></i>
+      </button>
+    </h3>
+
+    <h3 class='pin' *ngIf="authService.can('editProfile') || authService.employeeIs(employee)">
+      <i class="fas fa-key"></i>
+      <input #pin
+             placeholder="Clock-In"
+             [ngModel]="employee?.pin"
+             (blur)="savePin(pin.value)"
+             (keyup.enter)="savePin(pin.value)"/>
+      <i class="fas fa-pen"></i>
+    </h3>
+
+    <button *ngIf="canPressTopHalfGiveMooLaButton(employee)"
+      (click)="mooLaService.giveWithPrompts(employee)">
+      <i class="fas fa-money-bill-alt"></i>
+      Give MooLa
+    </button>
+  </div>
+</div>
+
+<div class="mooLa" *ngIf="canViewMooLaReport(employee)">
+  <div class="reports">
+    <div class="report">
+      <span>
+        <i class="fas fa-fw fa-money-bill-wave"></i>
+        {{ employee?.readMooLa(0) }}
+      </span>
+      <p>MooLa</p>
+
+      <hr>
+
+      <button (click)="mooLaService.giveWithPrompts(employee)" *ngIf="authService.can('giveMooLa', employee)">Give</button>
+      <button (click)="mooLaService.grantWithPrompts(employee)" *ngIf="authService.can('grantMooLa', employee)">Grant</button>
+      <button (click)="mooLaService.chargeWithPrompts(employee)" *ngIf="authService.can('chargeMooLa', employee)">Charge</button>
+    </div>
+    <ng-template [ngIf]="authService.hasPermission(employee, 'grantMooLa').allowed">
+      <div class="report">
+        <span>
+          <i class="fas fa-fw fa-hand-holding-usd"></i>
+          <oc-infinite-value [value]="mooLaService.getBudgetOrInfinity(employee)"></oc-infinite-value>
+        </span>
+        <p>Budget</p>
+
+        <hr>
+
+        <button (click)="mooLaService.supplyWithPrompts(employee)" *ngIf="authService.can('supplyMooLa')">Supply</button>
+      </div>
+      <div class="report">
+        <span>
+          <i class="fas fa-fw fa-receipt"></i>
+          {{ employee?.readMooLa(2) }}
+        </span>
+        <p>Given out</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <ng-template [ngIf]="employee?.groups.leader">
+    <button (click)="showExplainations = !showExplainations" id="readMore">Read More</button>
+    <div class="explainations" [class.hide]="showExplainations">
+      <p><b>Give:</b> Spend your personal MooLa on <b>{{ employee?.getName() || 'another employee' }}.</b></p>
+      <p><b>Grant:</b> Spend your weekly budget as a reward.</p>
+      <p *ngIf="authService.can('chargeMooLa', employee)"><b>Charge:</b> Deduct MooLa from <b>{{ employee?.getName() || 'another employee' }}</b> for a purchase.</p>
+      <p *ngIf="authService.can('supplyMooLa', employee)"><b>Supply:</b> Increase the budget on behalf of Da Cowz so <b>{{ employee?.getName() || 'another employee' }}</b> can grant it out.</p>
+    </div>
+  </ng-template>
+</div>
+
+<div class="scores"
+     [class.leader]="employee?.groups.leader">
+  <h3 class="subsection">Scores</h3>
+  <button *ngFor="let score of scores; trackBy: trackByScore"
+      class="score"
+      [ngClass]='score.classes'
+      (click)="scoreClick(score)">
+    <div class="icons">
+      <i class="fas fa-fw fa-crown superGoodIcon"></i>
+      <i class="fas fa-fw fa-star goodIcon"></i>
+    </div>
+    <p>{{ score.title }}</p>
+  </button>
+  <div class="score"
+      *ngIf="authService.can('createRatings', employee)"
+      (click)="rateWithoutPosition()">
+    General Feedback
+  </div>
+</div>
+
+<div class="rating" *ngIf="authService.can('createRatings', employee) && (ratePosition$ | async) as ratingPosition">
+  <oc-rating [employee]="employee"
+             [position]="ratingPosition"
+             [hint]="hint"
+             (finished)="doRatePosition(false)"></oc-rating>
+</div>
+
+<button *ngIf="authService.employeeHasRole('shiftLeader')" (click)="reviewOnlyMode = !reviewOnlyMode">Review Only Mode</button>
+
+<ng-container *ngIf="!reviewOnlyMode">
+  <div class="destinations" *ngIf="authService.can('manageDestinations', employee) && (authService.business$ | async) as business">
+    <h3 class="subsection">Destinations</h3>
+    <div class="control-card-container">
+      <ng-container *ngFor="let destination of business.destinationInfo">
+        <div *ngIf="employee?.hasDestination(destination.id)" class="destination control-card">
+          <span>
+            <i *ngIf="destination.icon" class="fas fa-{{ destination.icon }}"></i>
+            {{ destination.name }}
+          </span>
+
+          <button class="red"
+            (click)="employee?.controlDestination(destination.id, false)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+    <p class="oc-hint">Add {{ employee?.getName() || "people" }} to a destination by writing a rating in that destination.</p>
+  </div>
+
+  <div class="permissions" *ngIf="authService.can('editPermissions', employee)">
+    <h3 class="subsection">Permissions</h3>
+
+    <form class="control-card-container" #permissions>
+      <ng-container *ngFor="let permission of permissionsList; trackBy: trackByPermission">
+        <input type="checkbox"
+               [id]="permission.role"
+               [name]="permission.role"
+               [disabled]="!canChange(permission)"
+               (ngModelChange)="savePermissions(permissions)"
+               [ngModel]="employee?.roles[permission.role]"/>
+        <div class="permission control-card">
+          <p>{{ permission.title }}</p>
+          <label [for]="permission.role">
+            <i class="fas fa-check"></i>
+            <i class="far fa-square"></i>
+          </label>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+</ng-container>
+
+<!-- todo probably show history to everyone, but filter out ratings history if not can 'viewRatings' -->
+<div class="history" *ngIf="authService.can('viewRatings', employee)">
+  <h3 class="subsection">History</h3>
+  <div *ngFor="let event of employee?.history; trackBy: trackByHistory">
+    <oc-history-event [event]="event"></oc-history-event>
+  </div>
+</div>
+
+<div class="extraFunctions">
+  <!--
+    Don't show this when a guest is signed in because that means it's a service account,
+    and we don't want some random employee messing around with the accounts.
+  -->
+  <button class="red"
+          (click)="authService.logout()"
+          *ngIf="authService.employeeIs(employee) && !authService.isGuestSignedIn()">
+    Sign Out
+  </button>
+</div>

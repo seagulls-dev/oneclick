@@ -1,0 +1,39 @@
+{
+  "name": "one-click-server",
+  "version": "2.2.5",
+  "description": "Server code built for running on Firebase Functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint --project tsconfig.json",
+    "build": "sh build.sh",
+    "build2": "sh build.sh && sh GroupMe/build.sh && sh export.sh",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "10"
+  },
+  "keywords": [
+    "server",
+    "one-click",
+    "sync"
+  ],
+  "author": "James Finlinson",
+  "license": "ISC",
+  "dependencies": {
+    "cloner": "^0.4.0",
+    "firebase-admin": "^8.12.1",
+    "firebase-functions": "^3.7.0",
+    "moment": "^2.26.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.3"
+  },
+  "private": true
+}

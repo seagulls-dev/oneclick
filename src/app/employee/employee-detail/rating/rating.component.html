@@ -1,0 +1,45 @@
+<h3>Rating: {{ position?.title }}</h3>
+
+<ng-template [ngIf]="position.criterion">
+  <input type="checkbox" id="noScoresInput" [(ngModel)]="noScores"/>
+  <label for="noScoresInput">Submit info without a score?</label>
+
+  <ng-container *ngIf="!noScores">
+    <div *ngFor="let criteriaId of position.criterion" class="criteria">
+      <h4 class="title">{{ getCriteria(criteriaId).title }}</h4>
+      <oc-stars-widget class="stars" [(value)]="scores[criteriaId]" type="readwrite"></oc-stars-widget>
+      <p class="meaning">{{ getMeaning(getCriteria(criteriaId).benchmarks, scores[criteriaId]) }}</p>
+    </div>
+  </ng-container>
+</ng-template>
+
+<p *ngIf="!position.criterion && position.id !== 'general'">
+  Sorry, this position is not ratable. Talk to the training manager to resolve this issue.
+</p>
+
+<p id="markdownNote">
+  Learn more about <a href="https://commonmark.org/help/" target="_blank" rel="noreferrer noopener"><i class="fab fa-markdown"></i> Markdown</a>
+</p>
+
+<textarea
+  [(ngModel)]="message"
+  [placeholder]="placeholder"></textarea>
+
+<h3>Rating preview:</h3>
+<oc-history-event *ngIf="getPreviewRating() as preview" [event]="preview"></oc-history-event>
+
+<h3 *ngIf="!noScores && position.criterion">
+  Total score: {{ getAverageScore(position, scores) }}
+  <oc-stars-widget [value]="getAverageScore(position, scores)"></oc-stars-widget>
+</h3>
+
+<p *ngIf="submitTouched && submitIsDisabled()" class="alert">
+  Each of the star ratings are required.
+</p>
+
+<button
+  type="submit"
+  (submit)="submitRating('submit')"
+  (click)="submitRating('click')"
+  (key.enter)="submitRating('key.enter')"
+  >Submit Rating</button>

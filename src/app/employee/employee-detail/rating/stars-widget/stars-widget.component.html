@@ -1,0 +1,5 @@
+<div *ngFor="let number of [5, 4, 3, 2, 1]"
+     (click)="starClick(number)"
+     [class.selected]="isSelected(number)">
+    <i class="fas fa-star"></i>
+</div>

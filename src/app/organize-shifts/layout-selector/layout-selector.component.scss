@@ -1,0 +1,97 @@
+@import "../../variables";
+
+$arrow-size: 1em;
+$base-color: $white;
+$active-color: $cfa-red;
+$future-color: $white;
+$hover-color:  $cfa-red-lighter;
+
+:host {
+  background: inherit;
+}
+
+:host-context(.appSidebar) {
+  overflow: hidden;
+  white-space: nowrap;
+  box-shadow: 0 0 0.5em -0.2em #676767;
+  border-radius: .5em;
+
+  /deep/ & select {
+    font-size: 2em;
+  }
+}
+
+.selector {
+  padding: .2em;
+  height: 1.7em;
+  width: 6em;
+  // font-size: 1.25em;
+  background: $base-color;
+  color: $black;
+  position: relative;
+  padding-left: 1.8em;
+  padding-right: .25em;
+  display: inline-block;
+  transition: .2s ease-out;
+  border-top-left-radius: .2em;
+  border-bottom-left-radius: .2em;
+  cursor: pointer;
+
+  span {
+    font-size: 1.2em;
+  }
+
+  &::before, &::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: $arrow-size solid transparent;
+    border-bottom: $arrow-size solid transparent;
+    border-left: ($arrow-size * 3/5 + .1em) solid $black;
+    position: absolute;
+    top: 50%;
+    margin-top: $arrow-size * -1;
+    left: 100%;
+    z-index: 1;
+  }
+  &::after {
+    border-left: ($arrow-size * 3/5) solid $base-color;
+    left: calc(100% - 1px);
+    z-index: 2;
+    transition: inherit;
+  }
+  &:last-child {
+
+    &::before, &::after {
+      display: none;
+    }
+  }
+}
+
+.selector {
+  // HACK: This CSS rule has a greater specficity than the :hover style
+  // beause of the ~ sibling selector. There is not a good way around this,
+  // and it leads to not beautiful code :(
+  .active ~ &:not(:hover) {
+    background: $future-color;
+
+    &::after {
+      border-left-color: $future-color;
+    }
+  }
+  &:hover {
+    background: $hover-color;
+
+    &::after {
+      border-left-color: $hover-color;
+    }
+  }
+  &.active {
+    background: $active-color;
+
+    &::after {
+      border-left-color: $active-color;
+    }
+  }
+}

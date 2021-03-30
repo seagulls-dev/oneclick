@@ -1,0 +1,60 @@
+@import "../../../variables";
+
+:host {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+#searchBox {
+  flex-grow: 1;
+  font-size: 2em;
+  padding: .3em;
+  border-radius: .3em;
+  text-align: center;
+
+  &::placeholder {
+    color: $cfa-medium-grey-lighter;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $cfa-dark-blue;
+  }
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  & > * {
+    margin: 0.2em;
+  }
+}
+.filterGroup {
+  display: flex;
+  flex-direction: row;
+  border-radius: 0.6em;
+  overflow: hidden;
+  box-shadow: 0 0 0.2em;
+
+  & > div {
+    padding: 0.7em 2em;
+    text-align: center;
+    transition: background 0.15s ease-in, color 0.15s ease-in;
+
+    &:hover {
+      background: $cfa-dark-blue-lighter;
+    }
+    &.active {
+      background: $cfa-dark-blue;
+      color: $white;
+    }
+  }
+}
+
+.group p {
+  // This styles the show/hide advanced options button
+  color: $cfa-medium-grey;
+  padding: .2em;
+}

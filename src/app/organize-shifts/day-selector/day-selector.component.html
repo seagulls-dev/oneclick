@@ -1,0 +1,5 @@
+<select [ngModel]="selectedDay" (ngModelChange)="selectDay($event)">
+	<optgroup *ngFor="let weekGroup of weekGroups" [label]="weekGroup.title">
+		<option *ngFor="let day of weekGroup.days" [ngValue]="day">{{ +day.date === +actualDate ? "Today" : (day.date | time:true:true) }}</option>
+	</optgroup>
+</select>

@@ -1,0 +1,37 @@
+@import "../../../variables";
+
+:host {
+  height: 12.5em;
+  width: 10em;
+  padding: .5em;
+  border-radius: 1.3em;
+  display: inline-flex;
+  flex-direction: column;
+  border: 0.1em solid $black;
+  align-items: center;
+  margin: 0.3em;
+  justify-content: space-between;
+  background: #eeeeee;
+  box-shadow: .25em 0.5em 0.4em -0.5em #808080;
+}
+
+:host > * {
+  margin: 0;
+  padding: 0;
+}
+
+:host(.recentActivity) {
+  border-color: #43a047; // green:600
+  background: #43a047; // green:600
+}
+
+.name {
+  font-size: 1.5em;
+  color: $cfa-red;
+  overflow: hidden;
+}
+
+.position {
+  font-size: .9em;
+  color: $cfa-medium-grey;
+}

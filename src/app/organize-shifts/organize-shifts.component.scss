@@ -1,0 +1,258 @@
+@import "../variables";
+
+$extra-scroll-space: 6em;
+
+:host {
+  // display: flex; // not necessary; this is defined by the parent
+  flex-direction: column;
+}
+
+#header {
+  background: $cfa-dark-blue;
+  color: $white;
+  padding: 0.7em 1.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0.5em -0.07em $cfa-dark-blue-darker;
+  z-index: 5;
+  flex-shrink: 0;
+
+  :host-context(.appMenu) & {
+    justify-content: space-between;
+
+    /deep/ select {
+      font-size: 1.4em;
+    }
+  }
+  :host-context(.splitPanels) & > *:not(:last-child) {
+    margin: 0 1.3em;
+  }
+  :host-context(.appSidebar) & /deep/ select {
+    font-size: 2em;
+  }
+
+  :host-context(.appMenu.splitPanels) & {
+    justify-content: center;
+  }
+}
+#destinationSelector {
+  max-width: 46em;
+  margin: auto;
+  text-align: center;
+
+ .destinationOption {
+    padding: 2em 3em;
+    margin: 1em;
+    font-size: 1.5em;
+  }
+}
+#bringBackShifts {
+  padding: 0.6em;
+
+  :host-context(.appSidebar) & {
+    position: absolute;
+    right: 1em;
+
+    z-index: 100;
+  }
+}
+
+.content-container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row; // Default, but included for understandability
+  position: relative;
+  overflow: hidden;
+
+  // Adjust the font size based on screen size
+  :host-context(.appMenu) & {
+    font-size: 0.8em;
+  }
+  :host-context(.smallScreen) & {
+    font-size: 0.55em;
+  }
+}
+.main-content {
+  flex-grow: 1;
+}
+.content-group {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  overflow: hidden scroll; // safari doesn't support this
+
+  padding-bottom: $extra-scroll-space;
+  background: $cfa-light-grey-lighter;
+  height: calc(var(--full-height) * 1px - #{$extra-scroll-space});
+}
+
+.slide-sidebar {
+  flex-basis: 22.5em;
+  transition: 0.2s margin-right ease-in-out;
+  height: 100%;
+  overflow: hidden;
+  min-width: 25em;
+  max-width: 31em;
+  position: relative;
+
+  // Give padding to the children to leave the
+  // scroll bar in a natural space
+  .content-group {
+    padding: 0.3em 0.3em $extra-scroll-space;
+  }
+  .alt-content {
+    min-height: calc(100% - #{$extra-scroll-space});
+    min-width: calc(100% - 0.6em); // subtract the horizontal padding on .content-group
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transition: left 0.2s ease-in;
+
+    &.show-alt-content {
+      left: 0;
+    }
+  }
+
+  :host-context(.appSidebar) &.hide {
+    // HACK! this number is basically the width of the element;
+    // how do I make this work better w/o duplicating the value?
+    margin-right: -25.6em;
+  }
+  :host-context(.appMenu) & {
+    height: calc(var(--full-height) * 1px);
+    position: absolute;
+    right: 0;
+    transition-property: right;
+    width: min-content;
+
+    border-left: 0.07em solid $cfa-black-dark-blue;
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+    box-shadow: 0 0 1.6em 0 $cfa-dark-blue-darker;
+    z-index: 2;
+
+    &.hide {
+      right: -102% !important;
+    }
+  }
+  :host-context(.onePanel) & {
+    max-width: unset;
+    border-radius: 0;
+    width: 100vw;
+    right: 0;
+
+    .content-group {
+      padding: 0.3em 1.2em $extra-scroll-space;
+    }
+    .alt-content {
+      min-width: calc(100% - 2.4em); // Ditto ^^
+    }
+  }
+}
+
+
+#lowerOperations {
+  margin-top: 2.5em;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+  button {
+    width: 41%;
+    padding: 0.4em;
+  }
+
+  p {
+    padding-left: 5px;
+    padding-right: 5px;
+    color: $cfa-medium-grey;
+  }
+}
+
+#altPanelButtons {
+  grid-column: span var(--max-columns) / auto;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    letter-spacing: initial;
+    padding: .6em 2.5em;
+    margin: 0 0.5em;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    i {
+      font-size: 2em;
+      margin-bottom: .2em;
+    }
+
+    &:hover {
+      background: $cfa-light-grey;
+    }
+  }
+
+  #mooLaButton, #listsButton {
+    color: $cfa-dark-blue;
+  }
+  #promptsButton {
+    color: $cfa-red;
+  }
+
+  &.stackColumnwise {
+    flex-direction: column;
+
+    button {
+      margin: 0.5em 0;
+    }
+  }
+}
+
+p.full-width {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+}
+
+/*
+// not using these right now
+.marchingIcon {
+  position: fixed;
+  right: -4em;
+  top: 60%;
+  font-size: 2em;
+  border-radius: 1em;
+  width: 3em;
+  height: 3em;
+  z-index: 100;
+
+  .doneAddingShifts & {
+    right: 2%;
+  }
+
+  &[backward] {
+    left: -4em;
+
+    .doneAddingShifts & {
+      left: 2%;
+    }
+  }
+}
+*/
+
+/*
+// special rules to get around iOS issue.
+// iOS ignores the body `overflow:none` rule,
+// so I need to try something else...
+// https://stackoverflow.com/a/47818418/2844859
+@supports (-webkit-overflow-scrolling: touch) {
+  // CSS specific to iOS devices
+  /deep/ #header {
+    background: red;
+  }
+}
+*/

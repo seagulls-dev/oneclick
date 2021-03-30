@@ -1,0 +1,67 @@
+
+<div [ngSwitch]="event.kind">
+  <ng-container *ngSwitchCase="'system'">
+    <i class="fas fa-exclamation-circle symbol"></i>
+    <p>{{ event.description }}</p>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'rating'">
+    <i class="fas fa-scroll symbol"></i>
+    <p *ngIf="(event.note || event.message) as message; else notCompatible" [innerHTML]="message"></p>
+
+    <ng-template #notCompatible>
+      <p>Backwards compatilibility with this rating is not included.</p>
+    </ng-template>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'rating2'">
+    <div class="meta" *ngIf="event.submittedBy">
+      <div class="trainer">
+        <oc-profile-photo size="3.4em">
+          <img [src]="photoService.getUrl({submittedBy: event.submittedBy})"/>
+        </oc-profile-photo>
+        <h3 class="trainerName">{{ event.submittedBy.employee.name }}</h3>
+      </div>
+    </div>
+
+    <div class="scores" *ngIf="event.score">
+      <p class='score'>
+        <span class="position" [innerHTML]="event.position.name"></span>:
+        <span class="avgScore" [innerHTML]="event.score"></span>
+        <span class="hintInfo" *ngIf="event.hint"> on <b [innerHTML]="event.hint.name"></b></span>
+      </p>
+      <ul class="scores">
+        <li *ngFor="let score of event.scores">
+          <span class="ratingCriteria">{{ score.name }}</span>: <span class="rating">{{ score.value }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <markdown class="message"
+              *ngIf="event.messageMarkdown; else htmlMessage"
+              [data]="getHtml(event.messageMarkdown)"></markdown>
+    <ng-template #htmlMessage>
+      <p class="message" [innerHTML]="event.message"></p>
+    </ng-template>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'list'">
+    <div class="meta" *ngIf="event.submittedBy">
+      <div class="trainer">
+        <oc-profile-photo size="3.4em">
+          <img [src]="photoService.getUrl({submittedBy: event.submittedBy})"/>
+        </oc-profile-photo>
+        <h3 class="trainerName">{{ event.submittedBy.employee.name }}</h3>
+      </div>
+    </div>
+
+    <oc-list [evaluatedList]="event.list" [status]="0"></oc-list>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <i class="fas fa-exclamation-triangle symbol"></i>
+    <p>Unknown event kind: {{ event.kind }}</p>
+  </ng-container>
+</div>
+
+<p class="timestamp">{{ event.time | timeFromNow }}</p>

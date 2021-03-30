@@ -1,0 +1,9 @@
+<div>
+  <router-outlet></router-outlet>
+</div>
+
+<oc-menu *ngIf="authService.isAssociatedWithABusiness() && authService.can('useApplication')"></oc-menu>
+
+<!--
+<oc-save-widget *ngIf="appSidebar && authService.destination$ | async"></oc-save-widget>
+-->

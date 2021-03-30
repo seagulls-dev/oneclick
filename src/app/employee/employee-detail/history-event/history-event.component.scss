@@ -1,0 +1,90 @@
+@import "src/app/variables";
+
+$emphasized-border: 3px solid;
+
+:host {
+  border: 1px solid $cfa-light-grey-darker;
+  display: block;
+  border-radius: .6em;
+  padding: 1em;
+  background: $white;
+  position: relative;
+  text-align: left;
+  user-select: text;
+
+  // these two rules are aimed at the event types that don't provide additional rules
+  // system, unsupported
+  > div > * {
+    margin: 0;
+  }
+  > div > p:nth-child(2) {
+    margin-left: 2em;
+    margin-right: 6em;
+  }
+}
+.timestamp {
+  position: absolute;
+  margin: 0;
+  right: 1em;
+  top: 1em;
+}
+.symbol {
+  font-size: 1.25em;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $cfa-red;
+}
+
+// system
+:host(.system) .symbol {
+  color: $cfa-dark-blue;
+}
+
+// rating
+:host(.rating) {
+  border-top: $emphasized-border $cfa-light-blue;
+
+  .symbol {
+    color: $cfa-light-blue;
+  }
+}
+
+// rating2
+:host(.rating2) {
+  border-top: $emphasized-border $cfa-red;
+}
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+
+  .trainer {
+    display: inherit;
+    align-items: inherit;
+  }
+  .trainerName {
+    font-size: 1.6em;
+    margin: 0 0.5em;
+  }
+  .timestamp {
+    align-self: start;
+    margin: 0;
+  }
+}
+.scores {
+  text-align: left;
+
+  li:first-child:last-child {
+    // hide the subscore when only one exists
+    display: none;
+  }
+
+  .rating, .avgScore {
+    font-weight: bold;
+  }
+}
+.message {
+  margin: 0;
+}

@@ -1,0 +1,16 @@
+# compiled js files
+*.generated.js
+generated.*.js
+*.g.js
+dest/
+
+generated/
+generatedConfig/
+
+# the old files will still be watched
+# I'll have to be careful to commit new raw .js files that I create
+*.js
+**/*.js
+
+# error reporting
+*.log

@@ -1,0 +1,6 @@
+<oc-profile-photo size="8.75em">
+  <img  [src]="photoService.getSizedUrl({ employee: employee }, 'preview')"
+        alt="{{ employee.name }}'s profile photo">
+</oc-profile-photo>
+<h2 class="name">{{ employee.getName() }}</h2>
+<h3 class="position">{{ employee.getPositionString() }}</h3>

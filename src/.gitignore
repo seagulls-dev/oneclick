@@ -1,0 +1,3 @@
+# This is a TypeScript project
+# All *.js files are generated from scripts in other folders, and are not necessary here
+*.js

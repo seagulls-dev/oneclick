@@ -1,0 +1,22 @@
+@import '../variables';
+
+:host {
+  overflow-y: scroll;
+  background: #ffffff;
+  flex-direction: column;
+}
+
+#managerPromptButton {
+  width: min-content;
+  margin: auto;
+  min-width: 25em;
+  margin-top: 2em;
+  padding: 0 2em;
+  border-color: #c79a00; // Amber:400 - Dark
+  background: #ffca28; // Amber:400
+  color: #c56000; // Amber:800 - Dark
+
+  i {
+    font-size: 5em;
+  }
+}

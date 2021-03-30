@@ -1,0 +1,37 @@
+<div *ngIf="hints$ | async as hints; else noHints">
+    <p class="note">Tap to fill in the information</p>
+    <div *ngFor="let hint of hints"
+        class="hint"
+        (click)="goToProfile(hint)"
+        [attr.data-color]="hint.color">
+
+    <div class="icon-wrapper">
+        <i class="fas fa-fw fa-{{ hint.icon }}"></i>
+    </div>
+    <div class="body">
+        <h3 class="title" *ngIf="hint.title" [innerHTML]="hint.title"></h3>
+
+        <p class="message">
+            <span [innerHTML]="hint.message"></span>
+            <!--<span class="direction">Click here to rate.</span>-->
+        </p>
+    </div>
+</div>
+</div>
+
+<ng-template #noHints>
+    <div class="hint" data-color="red">
+        <div class="icon-wrapper">
+            <i class="fas fa-fw fa-couch"></i>
+        </div>
+        <div class="body">
+            <h3 class="title">No rating prompts</h3>
+
+            <p class="message">
+                This shift probably isn't set up yet:
+                <br>
+                Try a shift you already worked!
+            </p>
+        </div>
+    </div>
+</ng-template>

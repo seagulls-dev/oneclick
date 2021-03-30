@@ -1,0 +1,9 @@
+<div class="centeredContent">
+  <div class="section" *ngFor="let section of sections; trackBy: trackBySection">
+    <h1>{{ section.title }}</h1>
+    <oc-employee-card
+      *ngFor="let employee of section.employees; trackBy: trackByEmployee"
+      [routerLink]="['/employee', employee.id]"
+      [employee]='employee'></oc-employee-card>
+  </div>
+</div>

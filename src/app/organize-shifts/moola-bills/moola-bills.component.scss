@@ -1,0 +1,45 @@
+@import "../../variables";
+
+$blue: #1565c0; // Blue:800
+
+#loadingBills {
+  text-align: center;
+
+  i {
+    display: block;
+    font-size: 9em;
+  }
+}
+.bill {
+  background: transparent;
+  text-align: center;
+  margin: 1em 2.8em;
+
+  img {
+    width: 70%;
+    border-radius: 0.3em;
+    transition: transform 0.2s ease-in-out;
+  }
+  &.disabled img {
+    opacity: 0.3;
+    transform: scale(0.7);
+  }
+}
+
+.reportCard {
+  box-shadow: -1px 8px 14px -8px $blue;
+  padding: 0em 2em;
+  border-radius: 1em;
+  display: flex;
+  align-items: center;
+
+  :host-context(.appMenu) & {
+    box-shadow: 2px 2px 16px -4px $blue;
+  }
+
+  .bigNumber {
+    font-size: 2.5em;
+    margin-left: -0.4em;
+    margin-right: .4em;
+  }
+}

@@ -1,0 +1,41 @@
+<nav>
+    <a *ngFor="let menuIcon of menuIcons"
+        [routerLink]="menuIcon.route"
+        routerLinkActive="active"
+        title="{{ menuIcon.name }}">
+        <i class="fa-fw fas fa-{{ menuIcon.icon }}"></i>
+    </a>
+    <a  *ngIf="nextDestination"
+        (click)="authService.changeToDestination(nextDestination)"
+        title="Go to {{ nextDestination?.name }}">
+	    <i class="fa-fw fas fa-{{ nextDestination?.icon || 'warehouse' }}"></i>
+    </a>
+    <a *ngIf="authService.employee$ | async as currentEmployee"
+        [routerLink]="['employee', currentEmployee.id]"
+        routerLinkActive="active"
+        title="My Profile">
+            <oc-profile-photo size="1.5em">
+                <img [src]="currentEmployee | profilePhoto:'avatar'"
+                     alt="Signed in as {{ currentEmployee.getName() }}"/>
+            </oc-profile-photo>
+    </a>
+    <ng-template [ngIf]="authService.can('guestSignIn') || authService.isGuestSignedIn()">
+        <ng-template [ngIf]="authService.isGuestSignedIn()" [ngIfElse]="guestSignedOut">
+            <a (click)="authService.guestSignOut()"
+                title="Guest Sign-Out">
+                    <i class="fa-fw fas fa-sign-out-alt"></i>
+            </a>
+        </ng-template>
+        <ng-template #guestSignedOut>
+            <a (click)="authService.guestSignIn()"
+                title="Guest Sign-In">
+                    <i class="fa-fw fas fa-hat-cowboy"></i>
+            </a>
+        </ng-template>
+    </ng-template>
+    <a  *ngIf="nextBusinessName"
+        (click)="clickNextBusiness()"
+        title="Go to {{ nextBusinessName }}">
+	    <i class="fa-fw fas fa-building"></i>
+    </a>
+</nav>

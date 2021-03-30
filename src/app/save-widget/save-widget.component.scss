@@ -1,0 +1,99 @@
+@import "../variables";
+
+#oc-save {
+  background: transparent;
+  background: whitesmoke;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  padding: 10px;
+  border-radius: 50px;
+  transition: background 0.4s ease-out, border-color 0.3s;
+  display: flex;
+  align-items: center;
+  border: 2px solid;
+  color: #c5c5c5;
+
+  &.saved:not(.offline) {
+    border-color: green;
+    animation: hide-save 0.5s 5s cubic-bezier(0.52, 0.08, 0.38, 0.99) forwards;
+
+    .fa-cloud {
+      color: green;
+      opacity: .8;
+    }
+    .fa-check {
+      transform: initial;
+      transition: transform 0.35s cubic-bezier(0.43, 0.35, 0.47, 1.92);
+    }
+    p.saved {
+      /* width: 40px; */
+      /* animation: shrink-width 0.5s 5s cubic-bezier(0.68, 0.17, 0.4, 0.99) forwards; */
+    }
+  }
+  &.saving:not(.offline) {
+    border-color: #059e9b;
+
+    .fa-circle-notch {
+      opacity: 1;
+    }
+    .fa-cloud {
+      opacity: .9;
+    }
+  }
+
+  &.offline {
+    border-color: $cfa-red;
+
+    .fa-cloud {
+      color: black;
+    }
+    .fa-ban {
+      transform: initial;
+    }
+    p.offline {
+      width: 60px;
+      animation: shrink-width 0.5s 5s cubic-bezier(0.68, 0.17, 0.4, 0.99) forwards;
+    }
+  }
+}
+
+.fas {
+  transition: all 0.25s ease-in-out;
+  transform: scale(0);
+  color: white;
+}
+.fa-circle-notch {
+  opacity: 0;
+  color: white;
+}
+
+p {
+  display: inline-block;
+  margin: 0;
+  width: 0;
+  overflow: hidden;
+  transition: width 0.35s cubic-bezier(0.18, -0.06, 0.3, 1);
+  color: #424242;
+}
+span {
+  width: 3em;
+}
+.fa-cloud {
+  color: #059e9b;
+  transform: initial;
+  opacity: .67;
+}
+
+
+@keyframes shrink-width {
+  100% {
+    width: 0;
+  }
+}
+@keyframes hide-save {
+  100% {
+    background: white;
+    border-color: initial;
+  }
+}

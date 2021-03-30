@@ -1,0 +1,74 @@
+@import "../variables";
+
+:host {
+  z-index: 100;
+}
+
+// Common color styling
+nav {
+  a {
+    background: $cfa-dark-blue;
+    color: $white;
+    cursor: pointer;
+
+    &.active,
+    &:hover, &:focus {
+      background: $cfa-dark-blue-darker;
+    }
+  }
+}
+
+// big screen gets the menu on the side
+:host-context(.appSidebar) {
+  nav {
+    position: fixed;
+    width: min-content;
+    display: flex;
+    flex-direction: column;
+    top: 100px;
+  }
+
+  a {
+    padding: 5px 17px;
+    border: 0;
+    margin: 2px 0;
+    text-align: right;
+    width: min-content;
+    font-size: 1.8em;
+    transition: 0.2s ease-in-out;
+    border-radius: 0;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+    box-shadow: 0 0.1em 0.3em -0.1em $cfa-dark-blue;
+
+    &:hover, &:focus {
+      padding-left: 37px;
+      border-top-right-radius: 140px;
+      box-shadow: 0 0.1em 0.5em -0.1em $cfa-dark-blue;
+    }
+  }
+}
+
+// small screen gets an app-like menu
+:host-context(.appMenu) {
+  nav {
+    display: flex;
+    box-shadow: 0 0 0.5em -0.07em $cfa-dark-blue;
+  }
+
+  a {
+    padding: 8px;
+    text-align: center;
+    font-size: 1.4em;
+    transition: background 0.3s ease-out,
+                color 0.3s ease-out;
+    flex-grow: 1;
+
+    i {
+      transition: transform 0.2s linear;
+    }
+    &:hover i {
+      transform: scale(1.2);
+    }
+  }
+}

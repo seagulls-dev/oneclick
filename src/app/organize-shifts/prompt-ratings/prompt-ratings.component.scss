@@ -1,0 +1,91 @@
+@import "../../variables";
+
+:host-context(.smallScreen) {
+  font-size: 2em;
+}
+
+.note {
+  text-align: center;
+}
+
+.hint {
+  --lighter-color: #fafafa; // Grey:50
+  --light-color: #eeeeee; // Grey:200
+  --main-color: #e0e0e0; // Grey:300
+  --dark-color: #616161; // Grey:700
+  --darker-color: #212121; // Grey:900
+
+  cursor: pointer;
+  padding: 0;
+  border-radius: 1em;
+  margin: 0.8em 0;
+
+  border: 0px solid var(--dark-color);
+  box-shadow: 7px 12px 5px -11px var(--main-color);
+  background: var(--lighter-color);
+
+  display: flex;
+  overflow: hidden;
+
+  &[data-color="red"] {
+    --lighter-color: #ffebee; // Red:50
+    --light-color: #ffcdd2; // Red:100
+    --main-color: #f44336; // Red:500
+    --dark-color: #b71c1c; // Red:900
+    --darker-color: #7f0000; // Red:900 - Dark
+  }
+  &[data-color="orange"] {
+    // Orange theme
+    --lighter-color: #ffffe4; // Orange:100 - Light
+    --light-color: #ffe0b2; // Orange:200
+    --main-color: #ffb74d; // Orange:300
+    --dark-color: #fb8c00; // Orange:600
+    --darker-color: #ac1900; // Orange:900 - Dark
+  }
+  &[data-color="purple"] {
+    --lighter-color: #ede7f6; // Deep Purple:50
+    --light-color: #d1c4e9; // Deep Purple:100
+    --main-color: #7e57c2; // Deep Purple:400
+    --dark-color: #5e35b1; // Deep Purple:600
+    --darker-color: #000063; // Deep Purple:900 - Dark
+  }
+  &[data-color="green"] {
+    --lighter-color: #e8f5e9; // Green:50
+    --light-color: #c8e6c9; // Green:100
+    --main-color: #4CAF50; // Green:500
+    --dark-color: #2E7D32; // Green:800
+    --darker-color: #003300; // Green:900 - Dark
+  }
+  &[data-color="blue"] {
+    --lighter-color: #e3f2fd; // Blue:50
+    --light-color: #bbdefb; // Blue:100
+    --main-color: #2196f3; // Blue:500
+    --dark-color: #1565c0; // Blue:800
+    --darker-color: #002171; // Blue:900 - Dark
+  }
+
+  &:hover, &:focus {
+    background: var(--light-color);
+    outline: none;
+  }
+}
+
+.icon-wrapper {
+  background: var(--main-color);
+  color: var(--darker-color);
+
+  font-size: 1.5em;
+  padding: 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+.body {
+  padding: 0 1em;
+  color: var(--darker-color);
+
+  /deep/ .lastRating {
+    opacity: 0.7;
+    font-style: italic;
+  }
+}

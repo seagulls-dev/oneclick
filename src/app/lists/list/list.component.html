@@ -1,0 +1,57 @@
+<h2 class="title">
+  <span *ngIf="evaluatedList">
+    <b>{{ evaluatedList.score }}</b>
+    on
+  </span>
+  {{ getListTitle() }}
+  <button *ngIf="status === 2 && list"
+    class="red"
+    (click)="delete.emit(list)">
+      <i class="fas fa-trash-alt"></i>
+  </button>
+
+</h2>
+
+<div *ngFor="let item of getItems(list); trackBy: trackByListItem"
+  class="listItem"
+  [class.done]="item.done"
+  (click)="toggleItemDone($event, list, item)">
+  <p>
+    <b class="title" *ngIf="item.title">{{ item.title }}: </b>
+    <span class="description" *ngIf="!evaluatedList && item.title">{{ item?.description }}</span>
+  </p>
+  <div>
+    <oc-stars-widget
+      *ngIf="status === 0 || status === 3"
+      [(value)]="item.rating"
+      [type]="status === 3 ? 'readwrite' : 'readonly'"></oc-stars-widget>
+    <button (click)="removeItem($event, list, item)"
+      *ngIf="status === 2" class="red">Remove</button>
+    <button [class.dark]="item.done"
+      (click)="toggleItemDone($event, list, item)"
+      *ngIf="status === 1">
+      <i class="fas fa-{{item.done ? 'undo-alt' : 'check-circle' }}"></i>
+      {{ item.done ? "Go back!" : "Working..." }}
+    </button>
+  </div>
+</div>
+<div class="listItem newItem"
+  *ngIf="status === 2 && !titleOnly">
+  <p>
+    <input type="text" class="title" [(ngModel)]="newItemTitle" maxlength="20" placeholder="Serve the guests">
+    <input type="textarea" class="description" maxlength="150" wrap="soft"
+      [(ngModel)]="newItemDescription"
+      placeholder="Remember to create an emotional connection, look the guest in the eyes, and always say 'My Pleasure!'">
+  </p>
+  <div>
+    <button class="dark"
+      (click)="addItem($event, list)">
+      <i class="fas fa-plus"></i>
+      Add
+    </button>
+  </div>
+</div>
+
+<button *ngIf="status === 3"
+  (click)="submitClick()"
+  [disabled]="!authService.can('passOffLists')">Submit</button>

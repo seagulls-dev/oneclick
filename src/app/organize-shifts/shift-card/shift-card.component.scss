@@ -1,0 +1,317 @@
+@import '../../variables';
+
+$break-font-size: 0.65em;
+
+$basic-color: $white;
+$empty-color: $cfa-red-darker;
+$gonehome-color: $cfa-medium-grey;
+// $closing-color: #81d4fa;
+// $training-color: #fff59d;
+// $prep-color: #ce93d8;
+
+$needs-break-color: $cfa-red;
+$had-break-color: $cfa-light-blue;
+$pending-break-color: #ffcb32; // Yellow
+$on-break-color: #9DCC5F; // Green
+$double-shift-color: $cfa-dark-blue;
+$birthday-color: $cfa-bright-pink;
+$multi-position-color: $cfa-dark-blue-darker;
+
+$break-transition: 0.3s ease-in-out;
+
+/*Styling the shiftCards, in both the shiftsContainer and the layout*/
+:host {
+  display: contents;
+}
+
+/*Card setup*/
+.shift {
+  padding: 0.2em 0.3em;
+  border: none;
+  box-shadow: 0 0 3px 0px $cfa-medium-grey-lighter;
+  border-radius: 0.5em;
+  background: white;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  transition: 0.4s background, 0.3s opacity, 0.3s transform, 0.3s color;
+  // transition-timing-function: ease-in-out;
+  font-variation-settings: 'wght' 650;
+
+  &:not(.mini) {
+    border: 1px solid #a5b1bb; // An even lighter version of $cfa-medium-grey-lighter
+    box-shadow: 0.45em 1em 0.2em -1em;
+    margin: 0.17em 0;
+
+    .multiPosition {
+      margin-right: 0.2em;
+    }
+  }
+
+  * {
+    margin: 0;
+    // padding: 0;
+  }
+
+  &:not(.isMultiScheduled) .multiPosition {
+    display: none;
+  }
+}
+
+.dragging {
+  opacity: 0.6;
+  transform: scale(.87);
+}
+
+.isCurrentEmployee {
+  background-color: $gold;
+}
+
+.shiftInfo {
+  text-align: right;
+  font-variation-settings: 'wght' 450;
+}
+.multiPosition {
+  padding: 0 0.5em;
+  background: $multi-position-color;
+  color: $white;
+  border-radius: 0.5em;
+}
+.owner, .timeInfo {
+  font-size: 1em;
+}
+.owner {
+  padding-right: $break-font-size * 2;
+  width: 6.9em;
+  position: relative;
+}
+.highestPosition, .job {
+  font-size: 0.7em;
+  color: $cfa-medium-grey;
+}
+.highestPosition {
+  outline: none;
+
+  .notFullyQualified & {
+    font-style: italic;
+    color: $cfa-red-darker;
+  }
+  :host-context(.appSidebar) &:hover {
+    text-decoration: underline;
+  }
+}
+
+.timeInfo > * {
+  display: inline-block;
+}
+.connector::before {
+  margin: 0 0.05em 0 0.2em;
+  content: "to";
+  font-size: 0.7em;
+}
+
+/*Modifications to the mini cards*/
+.mini {
+  flex-direction: column;
+  align-content: flex-start;
+  border-radius: 0.6em;
+  box-shadow: 0 0 0.25em -0.13em;
+  border: 1px solid $cfa-light-grey-darker;
+
+  .personInfo {
+    border-radius: 0.5em;
+    overflow: hidden;
+  }
+  .shiftInfo {
+    height: 1.1em;
+  }
+  .owner {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-right: 0;
+    transition: background $break-transition;
+    background: var(--break-color);
+
+  }
+
+  .breakIndicator, .highestPosition, .job {
+    font-size: 0;
+    display: none;
+  }
+  .doubleShiftIndicator {
+    display: none;
+  }
+
+  .multiPosition {
+    padding: 0 0.18em 0 0.3em;
+    margin-left: -0.1em;
+  }
+
+  &.break .multiPosition {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .connector::before {
+    font-size: 1em;
+    content: "-";
+  }
+
+  .shiftInfo, .shortOwner {
+    text-align: center;
+    flex-grow: 1;
+    white-space: nowrap;
+  }
+}
+
+// Modifications to compact cards ==> these are dense versions of the full card
+.compact {
+  .owner {
+    width: 7.5em;
+    padding-right: 0;
+  }
+
+  .indicator {
+    display: inline-block;
+    position: relative;
+    right: 0;
+    float: right;
+    display: none;
+  }
+  &.break .breakIndicator,
+  &.doubleShift .doubleShiftIndicator,
+  &.birthday .birthdayIndicator {
+    display: inline-block;
+  }
+
+  .connector {
+    display: none; // TODO: make it appear if it is wide enough
+  }
+}
+
+/*Special colors for special shifts*/
+/*
+// Providing colors for these does not produce value
+// It actually detracts from the theme and, therefore, the sellability of it
+// Just because I can create colors for a bajillion reasons, that doesn't mean I should
+.closing {
+  background: $closing-color;
+}
+.training {
+  background: $training-color;
+}
+.prep {
+  background: $prep-color;
+}
+*/
+.empty {
+  background: $empty-color;
+
+  .highestPosition, .job {
+    color: $cfa-black-red;
+  }
+}
+.notStarted .timeIn,
+.alreadyEnded .timeOut {
+  font-style: italic;
+  color: $cfa-red;
+}
+.goneHome {
+  background: $cfa-medium-grey-lighter;
+
+  .highestPosition, .job,
+  .timeInfo, & {
+    color: $cfa-medium-grey-darker;
+  }
+  .shortOwner {
+    text-decoration: line-through;
+  }
+}
+
+/*Indicators*/
+.indicator {
+  font-size: $break-font-size;
+  position: absolute;
+  right: 0;
+  top: 0.1em;
+  border-radius: 0.45em;
+  text-align: center;
+  color: $white;
+  background: transparent;
+  transition: border-radius $break-transition, background $break-transition;
+
+  i {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+.breakIndicator {
+  background: var(--break-color);
+}
+.doubleShiftIndicator {
+  right: -3em;
+}
+.birthdayIndicator {
+  right: -6em;
+}
+
+/*Color coding*/
+.doubleShift {
+  .doubleShiftIndicator {
+    background: $double-shift-color;
+  }
+
+  .doubleShiftIcon {
+    opacity: 1;
+  }
+}
+.birthday {
+  .birthdayIndicator {
+    background: $birthday-color;
+
+    span {
+      font-size: 1.2em;
+    }
+  }
+  .birthdayIcon {
+    opacity: 1;
+  }
+}
+.needsBreak {
+  --break-color: #{$needs-break-color};
+
+  .needsBreakIcon {
+    opacity: 1;
+  }
+}
+.hadBreak {
+  --break-color: #{$had-break-color};
+
+  .breakIndicator {
+    border-radius: 50%; /* make the background a circle, instead of square */
+  }
+  .hadBreakIcon {
+    opacity: 1;
+  }
+}
+.pendingBreak {
+  --break-color: #{$pending-break-color};
+
+  .pendingBreakIcon {
+    opacity: 1;
+  }
+}
+.onBreak {
+  --break-color: #{$on-break-color};
+
+  .onBreakIcon {
+    opacity: 1;
+  }
+}

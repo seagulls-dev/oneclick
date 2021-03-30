@@ -1,0 +1,19 @@
+<ng-template [ngIf]="authService.can('viewTrainingDashboard')" [ngIfElse]="employeeList">
+  <oc-training-dashboard></oc-training-dashboard>
+</ng-template>
+
+<ng-template #employeeList>
+  <button id="managerPromptButton"
+          *ngIf="authService.employeeHasRole('serviceAccount')"
+          (click)="authService.guestSignIn()">
+    <h2>Lost?</h2>
+    <i class="fas fa-map-signs"></i>
+    <p>
+      Are you a leader looking for your tools?
+    </p>
+    <p>
+      Click here to sign in.
+    </p>
+  </button>
+  <oc-employee-list></oc-employee-list>
+</ng-template>

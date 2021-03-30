@@ -1,0 +1,140 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "./app/variables.scss";
+
+/* General Styles*/
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100vw;
+  overflow: hidden;
+  color: #000000;
+  font-size: 16px;
+  font-family: $body-font;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  box: none;
+}
+[draggable="true"] {
+  cursor: pointer;
+}
+
+button {
+  color: $cfa-black-dark-blue;
+  background: $white;
+  font-size: 1em;
+  font-family: inherit;
+  border-radius: 0.35em;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+  box-shadow: 0 0.1em 0.4em -0.15em $cfa-light-grey-darker;
+  border: .07em solid $cfa-light-grey-darker;
+  padding: 0.15em 0.8em 0.1em;
+
+  &.red {
+    color: $cfa-red;
+    border: .07em solid;
+
+    &:hover {
+      color: $white;
+      background: $cfa-red;
+    }
+  }
+  &.dark {
+    background: $cfa-dark-blue;
+    color: $white;
+
+    &:hover {
+      background: $cfa-dark-blue-lighter;
+    }
+    &:focus {
+      box-shadow: 0 0 .4em $cfa-dark-blue;
+    }
+  }
+
+  &:hover {
+    background: $cfa-light-grey-darker;
+    box-shadow: 0 0.1em 0.6em -0.15em $cfa-light-grey-darker;
+  }
+  &:focus {
+    outline: none;
+    border-color: $black;
+    box-shadow: 0 0 .4em $cfa-red;
+  }
+  &:active {
+    box-shadow: .1em .1em #757575;
+    transition: none;
+  }
+  &:disabled {
+    background: transparent;
+    color: #cecdcd;
+    cursor: default;
+    box-shadow: .1em .1em #cecdcd;
+    border-color: #949494;
+    border-left-color: #e2e2e2;
+    border-top-color: #e2e2e2;
+
+    &:hover {
+      background: $cfa-light-grey;
+    }
+  }
+}
+
+select {
+  font-family: $body-font;
+  background: inherit;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: 0.2s all;
+  border-bottom: .1em solid;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: .25em .5em 0 .25em;
+  color: inherit;
+  border-color: initial;
+  font-size: inherit;
+
+  &:focus {
+    border-color: $black;
+    outline: none;
+    box-shadow: 0 0 .2em $black;
+    border-radius: .1em;
+  }
+}
+
+input {
+  font-size: 1em;
+}
+
+.oc-hint {
+  &::before {
+    content: "\f05a";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 0.5em;
+    color: $cfa-light-blue;
+  }
+
+  margin: 1em;
+}
+
+/* Scroll bars */
+::-webkit-scrollbar {
+  width: .4em;
+}
+::-webkit-scrollbar-track {
+  margin: .4em;
+  -webkit-box-shadow: inset 0 0 .4em $cfa-medium-grey-lighter;
+  -webkit-border-radius: .6em;
+  border-radius: .6em;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: .6em;
+  border-radius: .6em;
+  background: $cfa-medium-grey-lighter;
+  -webkit-box-shadow: inset 0 0 .15em rgba(0, 0, 0, 0.6);
+}

@@ -1,0 +1,111 @@
+<div id="header">
+	<oc-day-selector [days]="(authService.destination$ | async)?.days$ | async" (dayChange)="selectDay($event)"></oc-day-selector>
+
+	<oc-layout-selector [layouts]="day?.layouts$ | async" [activeTime]="layout?.time"></oc-layout-selector>
+
+	<button
+		*ngIf="day"
+		class="symbol"
+		[attr.disabled]="authService.can('editShifts') ? null : true"
+		(click)="newLayout.show()">
+			<i class="fas fa-plus"></i>
+			{{ layout ? "" : "Add Layout" }}
+	</button>
+
+	<button *ngIf="altPanel !== 0"
+			(click)="finishAltPanelTask()">
+		I'm done
+	</button>
+
+	<button id="bringBackShifts"
+					class="symbol-disabled-class"
+					(click)="bringBackShifts()">
+		<i class="fas fa-sign-in-alt" [class.fa-flip-horizontal]="doneAddingShifts"></i>
+	</button>
+</div>
+
+<div class="content-container" #watchHeight>
+	<div class="main-content content-group">
+		<oc-positions
+			[layout]="layout"
+			[shiftsAtMoment]="shiftsNow"
+			[note]='day?.note'
+			(noteChange)='saveNote($event)'>
+			<div id="altPanelButtons" [class.stackColumnwise]="layout?.maxColumns <= 3">
+				<button (click)="viewBills()"
+					id="mooLaButton"
+					*ngIf="canGrantMooLa()">
+					<i class="fas fa-money-bill-wave"></i>
+					Grant MooLa
+				</button>
+				<button (click)="viewPrompts()"
+					id="promptsButton"
+					*ngIf="canViewPrompts()">
+					<i class="fas fa-tasks"></i>
+					View Prompts
+				</button>
+				<button (click)="listsModal.show()"
+					id="listsButton"
+					*ngIf="canViewLists()">
+					<i class="fas fa-broom"></i>
+					Open Lists
+				</button>
+			</div>
+		</oc-positions>
+	</div>
+
+	<div class="slide-sidebar" [class.hide]="doneAddingShifts">
+		<div class="content-group">
+			<oc-shifts  [shifts]="shiftsNow?.shifts"
+									[layout]="layout"
+									(dividerClick)="doneAddingShifts = true">
+				<div id="lowerOperations">
+					<button [disabled]="!authService.can('editShifts')" (click)="resetLayout(layout)">Reset Layout</button>
+					<button [disabled]="!authService.can('editShifts')" (click)="deleteLayout(layout)" class="red">Delete</button>
+
+					<p>{{ day?.date | time:false:true }}</p>
+					<p>Last Updated <b>{{ (authService.business$ | async)?.lastUpdated | timeFromNow }}</b></p>
+					<a href="https://docs.google.com/document/d/e/2PACX-1vQI4eFCkgPY5g4ABktPhkY6jJoDWnW-9NA2Ifbk4tiCEpEPc2huL3WjulMFjXS6cNuoTHWS63dLv7LN/pub"
+						 target="_blank" style="margin: 12px 0">
+						Version <b>{{ (authService.version$ | async) || "0.0.0" }}</b>
+					</a>
+					<p>{{ (authService.business$ | async)?.info.name }}</p>
+					<p>{{ (authService.employee$ | async)?.name }}</p>
+				</div>
+			</oc-shifts>
+		</div>
+
+		<div class="content-group alt-content"
+				[class.show-alt-content]="altPanel === 1"
+				*ngIf="authService.businessCan('useMooLa')">
+			<oc-moola-bills></oc-moola-bills>
+		</div>
+
+		<div class="content-group alt-content" [class.show-alt-content]="altPanel === 2">
+			<oc-prompt-ratings [layout]="layout"></oc-prompt-ratings>
+		</div>
+		<!--
+		<div class="content-group alt-content" [class.replace-content]="showTrainingHints">
+			<oc-training-hints></oc-training-hints>
+		</div>
+		-->
+	</div>
+</div>
+
+<!--
+<button (click)="march('backward')" class="marchingIcon" backward>&laquo;</button>
+<button (click)="march('forward')" class="marchingIcon" forward>&raquo;</button>
+-->
+
+<oc-modal #newLayout title="Create Layout"
+		  (show)="addLayout.setActiveTime()">
+	<oc-add-layout (newLayout)="newLayout.hide(); createLayout($event)"
+				   [layouts]="day?.layouts$ | async"
+				   #addLayout></oc-add-layout>
+</oc-modal>
+
+<oc-modal #listsModal title="Lists"
+			(show)="lists.open()">
+	<oc-lists #lists
+		[shifts]="shiftsNow?.shifts"></oc-lists>
+</oc-modal>

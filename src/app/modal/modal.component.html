@@ -1,0 +1,7 @@
+<div class="overlay" (click)="overlayClick()"></div>
+
+<div class="content">
+	<h2>{{ title }}</h2>
+	<button (click)="hide()" class="close fas fa-times-circle"></button>
+	<ng-content (hide)="hide()" *ngIf="active"></ng-content>
+</div>

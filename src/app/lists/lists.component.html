@@ -1,0 +1,31 @@
+<button *ngIf="authService.can('guestSignIn') || authService.can('viewLists')" (click)="changeStatus(1)">View only</button>
+<button *ngIf="authService.can('guestSignIn') || authService.can('passOffLists')" (click)="changeStatus(3)">Rate</button>
+<button *ngIf="authService.can('guestSignIn') || authService.can('editLists')" (click)="changeStatus(2)">Edit</button>
+
+<button *ngIf="selectedList" (click)="selectedList = null">Go Back</button>
+
+<ng-container *ngIf="status === 3">
+  <p>Who is responsible for this list?</p>
+  <select [(ngModel)]="evaluatingEmployee"
+    name="employeeBeingEvaluated">
+    <option *ngFor="let employee of sortedEmployees"
+      [ngValue]="employee">
+      {{ employee.getName() }}
+    </option>
+  </select>
+</ng-container>
+
+<ng-container *ngFor="let list of lists$ | async; trackBy: trackByList">
+  <oc-list *ngIf="list && !selectedList || selectedList.id === list.id"
+    (click)="selectedList = list"
+    (submit)="submit($event, evaluatingEmployee)"
+    (delete)="deleteList($event)"
+    [list]="list"
+    [titleOnly]="selectedList && selectedList.id !== list.id"
+    [status]="status"></oc-list>
+</ng-container>
+
+<button (click)="createList()"
+  *ngIf="status === 2">
+    Create List
+</button>

@@ -1,0 +1,192 @@
+@import "../../variables";
+
+$light-purple: #b085f5; // Light Deep Purple:400
+
+#welcomeHeader {
+  text-align: center;
+}
+
+#dashboardWrapper {
+  width: max-content;
+  margin: auto;
+  max-width: calc(100vw - 0.4em); // To account for the scroll bar on the side
+  overflow-x: hidden;
+}
+
+#tableWrapper {
+  overflow-x: scroll;
+}
+#trainingDashboard {
+  text-align: center;
+  vertical-align: middle;
+  margin: 1em 2em 2em;
+  margin: 1em auto 2em;
+  border-radius: 0.7em;
+  border-spacing: 0 0.2em;
+}
+
+col[name="photo"] {
+  width: 4em;
+}
+col[name="employeeName"] {
+  width: 11em;
+}
+
+.sortTarget {
+  transition: box-shadow 0.15s ease-out, color 0.15s ease-out;
+  border-radius: 0.3em;
+  cursor: pointer;
+  font-size: 1.1em;
+  padding: 0.5em 0.4em 0.3em;
+
+  border-bottom: 0.15em solid transparent;
+
+  &:hover {
+    box-shadow: 0 0.15em 0.4em 0 $cfa-dark-blue;
+  }
+  &.active {
+    color: $cfa-dark-blue;
+    border-color: initial;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.softFilter {
+  display: none;
+}
+
+
+// Styles that apply to the rows
+.employeeRecord {
+  transition: background 0.2s cubic-bezier(0.47, 0, 0.75, 0.72);
+  vertical-align: middle;
+  text-align: center;
+
+  &:nth-child(even) {
+    background: $cfa-light-grey;
+  }
+  &:hover {
+    background: #D1D1D1;
+  }
+
+  .indicator {
+    display: none;
+    color: $cfa-red;
+    font-size: 0.5em;
+
+  }
+  .indicator + .indicator {
+    margin-left: 0.4em;
+  }
+
+  .notGroupMeConnectedIndicator {
+    color: $cfa-medium-grey;
+  }
+
+  &.unreadUpdate .newMessageIndicator,
+  &.notGroupMeConnected .notGroupMeConnectedIndicator {
+    display: inline-block;
+  }
+
+}
+.name {
+  font-weight: normal;
+  font-size: 1.5em;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    font-style: italic;
+  }
+}
+.mooLa {
+  position: relative;
+
+  .mooLaActions {
+    position: absolute;
+    width: max-content;
+    z-index: 2;
+    background: $cfa-dark-blue;
+    padding: 0.2em;
+    border-radius: 0.4em;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+
+    button {
+      margin: 0 0.1em;
+    }
+  }
+
+  &:hover .mooLaActions {
+    opacity: 1;
+  }
+}
+
+
+// Styles for the score field
+.scoreList {
+  display: contents;
+}
+.score {
+  width: 2em;
+  display: block;
+  margin: auto;
+  height: 2em;
+  line-height: 2em;
+  border-radius: 50%;
+}
+.unqualified, .underQualified {
+  background: $cfa-red;
+}
+.qualified {
+  background: $cfa-light-blue-lighter;
+}
+.good {
+  background: $cfa-light-blue;
+}
+.superGood {
+  background: $cfa-dark-blue-lighter;
+}
+
+.noRating, .noValue {
+  color: $cfa-light-grey-darker;
+  background: initial;
+}
+
+#noResults {
+  display: none;
+
+  &:first-child {
+    display: table-row;
+  }
+
+  td {
+    padding: 5em;
+    color: $cfa-dark-blue-darker;
+
+    i {
+      font-size: 9em;
+    }
+
+  }
+}
+#truncatingMessage {
+  color: grey;
+
+  span {
+    font-weight: bold;
+    color: $cfa-dark-blue;
+  }
+}
+
+#loadingMessage {
+  text-align: center;
+  margin: 8em;
+
+  i {
+    font-size: 6em;
+  }
+}

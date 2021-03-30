@@ -1,0 +1,12 @@
+@import "../../variables";
+
+:host {
+  background: inherit;
+}
+
+optgroup {
+  color: $cfa-dark-blue;
+}
+option {
+  color: $white;
+}

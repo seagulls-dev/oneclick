@@ -1,0 +1,35 @@
+<table>
+  <thead>
+    <tr>
+      <th>Business</th>
+      <th class="center">Store</th>
+      <th class="center">Phone</th>
+      <th class="center">Config Updated</th>
+      <th class="center">HS Updated</th>
+      <th class="center">HS Employees</th>
+      <th class="center">Activity</th>
+
+      <th class="center">Auto Update</th>
+      <th class="center">Training</th>
+      <th class="center">GroupMe</th>
+      <th class="center">MooLa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let business of businesses$ | async">
+      <td (click)="viewBusiness(business)" class="link has-tooltip"
+          [matTooltip]="business.info.address" matTooltipShowDelay="500">{{ business.info.name }}</td>
+      <td class="center">{{ business.info.storeNumber }}</td>
+      <td class="center">{{ business.info.phoneNumber }}</td>
+      <td class="center has-tooltip" [matTooltip]="business.configUpdated">{{ business.configUpdated | timeFromNow }}</td>
+      <td class="center has-tooltip" [matTooltip]="business.lastUpdated">{{ business.lastUpdated | timeFromNow }}</td>
+      <td class="center">{{ business.hsEmployees }}</td>
+      <td class="center has-tooltip" [matTooltip]="business.lastShiftActivity">{{ business.shiftActivityCount }}</td>
+
+      <td class="center has-tooltip" [matTooltip]="business.autoUpdate">{{ featureString(business.autoUpdate) }}</td>
+      <td class="center has-tooltip" [matTooltip]="business.useTraining">{{ featureString(business.useTraining) }}</td>
+      <td class="center has-tooltip" [matTooltip]="business.processGroupMe">{{ featureString(business.processGroupMe) }}</td>
+      <td class="center has-tooltip" [matTooltip]="business.useMooLa">{{ featureString(business.useMooLa) }}</td>
+    </tr>
+  </tbody>
+</table>

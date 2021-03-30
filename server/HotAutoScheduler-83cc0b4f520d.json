@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "hotautoscheduler",
+  "private_key_id": "83cc0b4f520d9a861e6e0235358e185ad9d5ce8b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCNqSOTb9zPrZ6P\nSswj0K7NSic27nSs5mczkTfMMWpRXneZxsZphOkO4YNrfA035SL2Jnz9BgZrUFt9\nrcFhQ+Kz67Hs2FyJ0wnMw7b96hnTLaAqqYPnKVW9aIjVZc0Q65nOtO9w8/WoziMk\nGQCMYPNJg659MxHAchCN6TQDTyXnplmLxVAHcMwlDTu6P/sVAqEMq77zxDhkvP5f\nzHk8IKZvj4xB12WjAwn6xLHwsYruC3NK6O9+3Mz2HQ7JYuQV0QrPtxf4wXd74VF2\nVccXmtLcFJRaqy5bCF6nIlPZvc91jHqMl5kDIPYmLJFefTTxC7CQ15Cqm54SFrUs\ntgCHRHcZAgMBAAECgf9agaufhyqhM0v8A3GxW8GGC35KH2vcpUOcSFSG49hG8T0S\nQAwd2XsNgb/HNBRIJwjx1QF2u4uwTECOZ538pWz0pZdkAq8c5I+RgSewrCiMFa7t\nQPpCg08v0yky8K6thzWAGOZ7tL58vyKVztQuszMjP8EnMjxD9ZI3qBj5iWS4kLru\n0eBb5HuK3pUULr6X+NdEPGRCtNk8bQtnrrBZMEQHp8zHtHyLMtTGdzeCje9rBLvU\nORWQn5EKGrcTFzPMuOlrGWV04bQQQOB2KVrmm19mDEJPrysyxb9Ka5Vr9LGDuhNC\nbdnHauHXhwaDOWNgBVZ63qOW8CBhdqRJHArI/7UCgYEAwn7xXAXfYOOeX41KQfKa\nu3AS6O1n9MofCmVcGhz7ERRZDSo8gszbUTJTgJhIn0a6sHlv5djxQeRcKnQmibvA\nx1X2wr0QXZQSVyX5IvBIZukLAqCXB84ADaJbtz1bT4Pg22zux5QOMEDbSBhDe+/i\nro8Tc2OSQyU11xFmLAuLPmcCgYEAunUFhfnqgZ06Mze4dP4ZZXUY1sAWSVQhTTUX\nQpZaxvmLSEFjL9RU5pb0zha3rAZ86W9fcSgJc45bCe4c7dZ00uA4xA3d3YNUTIZU\n6hz9GTyhjShrHJekex3uoF0/EmWWOdjQFooTTajzBRhh0jx/WqA2b7Nh80AJRs2B\nRwf2Ln8CgYA17fUGyyoRN4wmeorolliJOJ5Fr+5vVcwdmdVb+EU1iyrWF6wHqL33\nWbkFozQf1gDWBhYc6XacCrHzo5k7/6+IljGB9eKfz/r15zWZln686kl/RQAbzeb9\n4NMFkCHNfofOz/m1pTv57UHgT7oGl5GHTWzbRfS8YYj4RX7LH7hQaQKBgQCfnSl7\nRTNwfU2jJqHq1NKcvZ7jx0/Mug4/76DXyaowBtMqqX7lJNkBBFzQRzY4Nt2bX1HO\npj1hBI3+dC2jlCAxnOw7OLuispfpYl0yhFpNzk9lbSI0OcP9+OObt/cUIo51Opr3\nkH9xzZ0r0XF77Xn/9IJlIKRK/ZhzWdy/F5uwtQKBgQCQ/JRPNQ7Gko9ZGaqeRfKn\naQ4seeaA/hGVjrzniNZJ9/q/65MiSe0/udOcsBlWIdE91mM4FzkHHCjOeGHqqk2J\n1LUlfqh4Ne2SsxrvX8/nZy79Kf2439CZrxVIa66Bvy55xGTOVb9VvGdtTRpFnR1q\nzU1Jx/01pZd0oS5SGlWEvw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "one-click@hotautoscheduler.iam.gserviceaccount.com",
+  "client_id": "113984717074734591009",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/one-click%40hotautoscheduler.iam.gserviceaccount.com"
+}

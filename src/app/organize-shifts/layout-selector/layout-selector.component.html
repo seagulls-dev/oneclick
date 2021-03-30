@@ -1,0 +1,19 @@
+<ng-container *ngIf="(screenService.resize$ | async)?.appMenu; else horizontalSelector">
+	<select [ngModel]="selectedLayoutSelector" (ngModelChange)="selectLayout($event)">
+		<option *ngFor="let selector of sortedSelectors; trackBy: trackBySelector"
+						[ngValue]="selector">
+			{{ selector.time | time:false }}
+		</option>
+	</select>
+</ng-container>
+
+<ng-template #horizontalSelector>
+	<div class="selector"
+		 *ngFor="let selector of displaySelectors; trackBy: trackBySelector"
+		 [class.active]="selector.id === selectedLayoutSelector.id"
+		 (click)="selectLayout(selector)">
+		<span class="displayTime">
+			{{ selector.time | time:false }}
+		</span>
+	</div>
+</ng-template>

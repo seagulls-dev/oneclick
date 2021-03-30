@@ -1,0 +1,50 @@
+<div id="positionsContainer"
+	[style]="getContainerStyle(layout)"
+	 *ngIf="layout">
+
+	<textarea
+		placeholder="Remember to serve the customer first..."
+		#noteInput
+		[value]="note"
+		[disabled]="!authService.can('editShifts')"
+		(blur)="saveNote(noteInput.value)"></textarea>
+
+	<!-- Allow organizeShifts to project in some alt Panel navigation buttons -->
+	<ng-content></ng-content>
+
+	<ng-container *ngFor="let section of layout.sections; let sectionIndex = index; trackBy: trackByIndex">
+		<h2 class="sectionTitle">{{ section.sectionTitle }}</h2>
+		<div ocDroppable
+			 (ocDrop)="handleDrop($event, position)"
+			 *ngFor="let position of section.positions; let positionIndex = index; trackBy: trackByIndex"
+			 [ngClass]="getPositionContainerClasses(position, positionIndex)"
+			 [style]="getPositionStyle(position)">
+			<h4 class="positionTitle">{{ position.title }}</h4>
+			<div class="positionContents">
+				<oc-shift-card
+					*ngFor="let ownerId of position.shifts"
+					mini='true'
+					[shift]="shiftsAtMoment.withEmployee(ownerId)"
+					(dragStart)='onShiftCardDragStart($event, position)'
+					(dragEnd)='onShiftCardDragEnd($event)'
+					[scheduledNum]="layout.workers[ownerId]"></oc-shift-card>
+
+					<button *ngIf="canSwapPosition(position)"
+						class="positionSwap"
+						(click)="trySwapPosition(layout, position, sectionIndex, positionIndex, swapPositionModal)">
+							<i class="far fa-lightbulb"></i>
+					</button>
+			</div>
+		</div>
+	</ng-container>
+</div>
+
+<div id="noLayouts" *ngIf="!layout">
+	<p>Start the day by creating a new Layout</p>
+</div>
+
+<oc-modal #swapPositionModal title="Swap Position"
+	(show)="swapPosition.prepare()">
+	<oc-swap-position-modal (newPosition)="swapPositionModal.hide(); finishSwappingPosition($event)"
+		#swapPosition></oc-swap-position-modal>
+</oc-modal>

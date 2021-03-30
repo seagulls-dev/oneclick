@@ -1,0 +1,52 @@
+<div [ngClass]="getClasses()"
+		 (click)="shiftClick()"
+		 [ocDraggable]="this.authService.can('editShifts')"
+		 ocDroppable
+		 ocDropAllowPropogation
+		 (ocDrop)="tryHandleDrop($event)"
+		 [dragData]='getDragData()'
+		 (ocDragStart)="handleDragStart()"
+		 (ocDragEnd)="handleDragEnd()">
+	<div class='personInfo'>
+		<h1 class='owner'>
+			<span class="multiPosition">{{ scheduledNum }}x</span>
+			<span class="shortOwner">{{ shift.owner?.getName() }}</span>
+			<span class="indicator breakIndicator fa-stack">
+				<i class="fas fa-cookie-bite hadBreakIcon"></i>
+				<i class="fas fa-coffee needsBreakIcon"></i>
+				<i class="fas fa-clock pendingBreakIcon"></i>
+				<i class="fas fa-drumstick-bite onBreakIcon"></i>
+			</span>
+			<span class="indicator doubleShiftIndicator fa-stack">
+				<i class="fas fa-check-double doubleShiftIcon"></i>
+			</span>
+			<span class="indicator birthdayIndicator fa-stack">
+				<i *ngIf="birthday?.isToday === true" class="fas fa-birthday-cake birthdayIcon"></i>
+				<span *ngIf="birthday?.isToday === false">{{ birthday.dayAbbreviation }}</span>
+			</span>
+		</h1>
+		<h4 class='highestPosition'
+				(click)="positionClick($event)">
+			{{ shift.owner?.getPositionString() }}
+			<span *ngIf="message" [style.color]="message.color"> - {{ message.string }}</span>
+		</h4>
+	</div>
+	<div class='shiftInfo'>
+		<span class="timeInfo">
+			<p *ngIf="breakTrackerText; else pendingInfo">
+				On Break: {{ breakTrackerText }}
+			</p>
+			<ng-template #pendingInfo>
+				<p *ngIf="shift.goneOnBreak == 'pending'; else shiftTimeInfo">
+					Pending
+				</p>
+				<ng-template #shiftTimeInfo>
+					<p class='timeIn'>{{ shift.timeIn | time:mini }}</p>
+					<p class="connector"></p>
+					<p class='timeOut'>{{ shift.timeOut | time:mini }}</p>
+				</ng-template>
+			</ng-template>
+		</span>
+		<h4 class='job'>{{ shift.job }}</h4>
+	</div>
+</div>

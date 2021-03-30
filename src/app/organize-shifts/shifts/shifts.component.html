@@ -1,0 +1,47 @@
+<div class="shiftsWrapper">
+	<div id="stats" *ngIf="stats">
+		<div class="stat">
+			<p class="main"><i class="fas fa-calendar"></i> <b [innerHTML]="stats.shifts"></b></p>
+			<p class="label">Shifts</p>
+		</div>
+		<div class="stat">
+			<p class="main"><i class="fas fa-users"></i> <b [innerHTML]="stats.workers"></b></p>
+			<p class="label">Workers</p>
+		</div>
+
+		<div class="stat" *ngIf="stats.strength">
+			<p class="main"><i class="fas fa-fist-raised"></i> <b [innerHTML]="stats.strength"></b></p>
+			<p class="label">Strength</p>
+		</div>
+		<div class="stat" *ngIf="stats.leaders">
+			<p class="main"><i class="fas fa-user-tie"></i> <b [innerHTML]="stats.leaders"></b></p>
+			<p class="label">Leaders</p>
+		</div>
+		<div class="stat" *ngIf="stats.newbies">
+			<p class="main"><i class="fas fa-baby"></i> <b [innerHTML]="stats.newbies"></b></p>
+			<p class="label">Newbies</p>
+		</div>
+	</div>
+
+	<oc-shift-card *ngFor="let shift of filteredShiftsUnscheduled; trackBy: trackByShift"
+			[shift]="shift"
+			[compact]="compact"
+			(dragEnd)="filterShifts()"
+			[scheduledNum]="getScheduledNum(shift)"></oc-shift-card>
+</div>
+
+<button id="scheduledShiftsDivider"
+		(click)="dividerClick.emit()"
+		*ngIf="filteredShiftsScheduled.length && filteredShiftsUnscheduled.length">Scheduled shifts</button>
+
+<div class="shiftsWrapper">
+	<oc-shift-card *ngFor="let shift of filteredShiftsScheduled; trackBy: trackByShift"
+			[shift]="shift"
+			[compact]="compact"
+			(dragEnd)="filterShifts()"
+			[scheduledNum]="getScheduledNum(shift)"></oc-shift-card>
+</div>
+
+<div id="noResults" *ngIf="!filteredShiftsScheduled.length && !filteredShiftsUnscheduled.length">No shifts here.</div>
+
+<ng-content></ng-content>

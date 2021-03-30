@@ -1,0 +1,31 @@
+<div class="optionButtons">
+  <button *ngFor="let position of positions"
+    class="option"
+    (click)="selectPosition(position)">
+    {{ position.title }}
+
+    <button class="delete red"
+      (click)="$event.stopPropagation(); deleteBonusPosition(position)">
+        <i class="fas fa-trash"></i>
+    </button>
+  </button>
+</div>
+
+<form (ngSubmit)="createBonusPosition()">
+  <input
+    placeholder="New position"
+    name="newPosition"
+    [(ngModel)]="newPositionName" type="text"/>
+
+  <div>
+    <label for="requirement">Requires Training</label>
+    <select [(ngModel)]="positionRequirement" name="requirement" required>
+      <option *ngFor="let position of trainingPositions"
+          [ngValue]="position.id"
+          [innerHTML]="position.title">
+      </option>
+    </select>
+  </div>
+
+  <button type="submit" class="dark">Create!</button>
+</form>

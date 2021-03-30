@@ -1,0 +1,46 @@
+$body-font: 'Heebo', sans-serif;
+
+$black: #212121; // Black:900
+$white: #ffffff; // White
+
+// CFA COLORS
+// These colors were taken from the CFA website. I would like to use some of
+// them as the basis of a CFA themed app. One issue is that the color set is
+// limited: there is no yellow, green, dark grey, and other variants of red.
+$cfa-dark-blue: #1F4F71;
+$cfa-light-blue: #4BA5BB;
+$cfa-medium-grey: #485158;
+$cfa-red: #e45d58; // #DE3B34; // I picked a slightly lighter variation by adjusting the L in HSL by +8
+$cfa-light-grey: #F5F5F5;
+
+// Systematically generated colors:
+$cfa-light-blue-lighter: #85BAC7;
+$cfa-light-blue-darker: #316C7A;
+$cfa-dark-blue-lighter: #3383BD;
+$cfa-dark-blue-darker: #173C57;
+$cfa-red-darker: #5E1816;
+$cfa-red-lighter: #EB9491;
+
+$cfa-medium-grey-darker: #343B40;
+$cfa-medium-grey-lighter: #8899A6;
+$cfa-light-grey-darker: #DBDBDB;
+$cfa-light-grey-lighter: #FCFCFC;
+
+$cfa-bright-pink: #F500F5;
+$cfa-dark-orange: #BD7546;
+$cfa-yellow: #DCCA28;
+
+// BLACKS -- Adjsuted in HSV mode with the Value set to 15
+$cfa-black-dark-blue: #0A1B26;
+$cfa-black-light-blue: #0F2226;
+$cfa-black-red: #260A09;
+$cfa-black-medium-grey: #22272a;
+
+// Generated colors:
+// These are unscientific variations on the CFA colors above
+$cfa-light-blue-tint: #5AC5E0;
+$cfa-black: #24282B;
+$cfa-red-tint: #f4bbb9;
+
+// Other colors
+$gold: #fdd835;

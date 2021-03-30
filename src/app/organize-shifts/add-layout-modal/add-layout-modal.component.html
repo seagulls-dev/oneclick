@@ -1,0 +1,19 @@
+<div class="optionButtons">
+	<button *ngFor="let time of suggestedTimes"
+			class="option"
+		 [class.active]="activeTime == time"
+		 (click)="createAtTime(time)">
+		{{ time | fromHoursFormat | time:false }}
+	</button>
+</div>
+
+<div class="selectOptions">
+  <select [(ngModel)]="selectedOption" name="newTime">
+    <option *ngFor="let time of selectOptions"
+        [ngValue]="time"
+        [innerHTML]="time | fromHoursFormat | time:false">
+    </option>
+  </select>
+
+	<button (click)="createAtTime(selectedOption)">Create!</button>
+</div>

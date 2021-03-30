@@ -1,0 +1,37 @@
+:host(.appMenu) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & > div {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+  }
+
+  & oc-menu {
+    flex-shrink: 0;
+  }
+}
+
+:host(.appSidebar) {
+  height: 100%;
+  width: 100vw;
+  font-size: 12px;
+
+  & > div {
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    overflow: hidden;
+  }
+}
+
+/deep/ router-outlet + * {
+  display: flex;
+  flex: 1;
+}
+
+:host(.smallScreen) {
+  font-size: .8em;
+}

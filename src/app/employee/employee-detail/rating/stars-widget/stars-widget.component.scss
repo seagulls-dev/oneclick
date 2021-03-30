@@ -1,0 +1,32 @@
+@import "src/app/variables";
+
+:host {
+  display: inline-flex;
+  flex-direction: row-reverse;
+}
+
+div {
+  color: $cfa-medium-grey-lighter;
+  font-size: 1.5em;
+
+  i {
+    margin: 0 1px;
+  }
+
+  &.selected,
+  &.selected ~ & {
+    color: $gold;
+  }
+
+  :host(.interactive) & {
+    cursor: pointer;
+
+  }
+  :host(.interactive) &:hover,
+  :host(.interactive) &:hover ~ & {
+    color: $cfa-red;
+    // color: $cfa-red !important;
+    // this !important is required because otherwise the
+    // '.selected ~ div' selector overpowers this selector
+  }
+}

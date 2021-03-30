@@ -1,0 +1,75 @@
+@import '../../variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+// Extra parts
+#stats {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1em;
+  flex-wrap: wrap;
+
+  // For when we go into the split view
+  grid-column-end: span 2;
+}
+.stat {
+  text-align: center;
+  margin: 0.3em;
+
+  p {
+    margin: 0;
+  }
+  .main {
+    font-size: 1.2em;
+
+    i {
+      margin-right: 0.3em;
+    }
+  }
+}
+
+
+.shiftsWrapper {
+  display: flex;
+  flex-direction: column;
+}
+#scheduledShiftsDivider {
+  height: 6em;
+  border-radius: 1.5em / 50%;
+  margin: 1em;
+}
+#noResults {
+  text-align: center;
+  padding: 1.25em 0 0 0;
+  color: $cfa-medium-grey;
+  font-size: 1em;
+}
+
+// provide extra whitespace to scroll with
+:host-context(.appMenu) {
+  margin: 0 3em 0 0;
+}
+:host-context(.onePanel) {
+  margin: 0 3em 0 0;
+  font-size: 1.5em;
+
+  // Display the shifts in two columns when the screen is really small
+  .shiftsWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+      /deep/ .shift {
+        margin: 0.3em 0.7em;
+
+        .owner {
+          width: 5em;
+        }
+        .connector {
+          display: none;
+        }
+      }
+  }
+}

@@ -1,0 +1,73 @@
+<div class="group">
+  <h2>Who are you looking for?</h2>
+  <input  [ngModel]="filterOption.search.text"
+          (ngModelChange)="changeSearch($event)"
+          id="searchBox"
+          placeholder="Da Cowz"/>
+</div>
+<hr>
+<div class="group">
+  <div class="filterGroup">
+    <div  [class.active]="groupType === 'destination'"
+          (click)="filterForDestination()">
+      Filter for {{ destination?.name }}</div>
+    <div  [class.active]="groupType === 'mooLa'"
+          *ngIf="authService.can('viewMooLa')"
+          (click)="filterForMooLa()">
+      See people with Moo-La</div>
+    <div  [class.active]="groupType === 'everyone'"
+          (click)="filterForEveryone()">
+      See everyone</div>
+  </div>
+
+  <ng-template [ngIf]="showAdvancedOptions">
+    <div class="filterGroup">
+      <div  [class.active]="filterOption.groups.leader === 2"
+            (click)="changeFilterGroup('leader', 2)">
+        Leaders Only</div>
+      <div  [class.active]="filterOption.groups.leader === 1"
+            (click)="changeFilterGroup('leader', 1)">
+        Hide Leaders</div>
+      <div  [class.active]="filterOption.groups.leader === 0"
+            (click)="changeFilterGroup('leader', 0)">
+        Don't filter Leaders</div>
+    </div>
+    <div class="filterGroup">
+      <div  [class.active]="filterOption.groups.newbie === 2"
+            (click)="changeFilterGroup('newbie', 2)">
+        Newbies Only</div>
+      <div  [class.active]="filterOption.groups.newbie === 1"
+            (click)="changeFilterGroup('newbie', 1)">
+        Hide Newbies</div>
+      <div  [class.active]="filterOption.groups.newbie === 0"
+            (click)="changeFilterGroup('newbie', 0)">
+        Don't filter Newbies</div>
+    </div>
+
+    <!--
+    Only show this group if more than two 'real' options are available.
+    `All Information` is not a real option
+    -->
+    <div class="filterGroup"
+      *ngIf="screenService.appMenu || authService.can('viewMooLa')">
+      <div  *ngIf="screenService.appMenu"
+            [class.active]="isShowing('basic')"
+            (click)="showData('basic')">
+        Basic</div>
+      <div  [class.active]="isShowing('training')"
+            (click)="showData('training')">
+        Training</div>
+      <div  [class.active]="isShowing('mooLa')"
+            *ngIf="authService.can('viewMooLa')"
+            (click)="showData('mooLa')">
+        Moo-La</div>
+      <div  [class.active]="isShowing('both')"
+            (click)="showData('both')">
+        All Information</div>
+    </div>
+  </ng-template>
+  <p (click)="showAdvancedOptions = !showAdvancedOptions">
+    {{ showAdvancedOptions ? "Hide" : "Show" }} Advanced Options
+    <i class="fas fa-angle-{{ showAdvancedOptions ? 'up' : 'down' }}"></i>
+  </p>
+</div>

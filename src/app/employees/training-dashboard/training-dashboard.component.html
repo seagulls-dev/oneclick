@@ -1,0 +1,141 @@
+<h1 id="welcomeHeader">Welcome to the Training Dashboard!</h1>
+
+<div id="dashboardWrapper">
+  <oc-filter-option
+    [reset$]="reset$"
+    (filterChange)="filterOption$.next($event)"
+    *ngIf="!isLoading"></oc-filter-option>
+
+  <div id="tableWrapper">
+    <table id="trainingDashboard" *ngIf="sampleEmployee$ | async as sampleRecord; else loading">
+      <thead>
+        <tr>
+          <th style="visibility: hidden">Photo</th>
+          <th [class.active]="isSortActive('name')"
+              (click)="changeSort('name')"
+              class="sortTarget">
+            Name</th>
+          <th [class.active]="isSortActive('highestPosition')"
+              (click)="changeSort('highestPosition', true)"
+              class="sortTarget">
+            Highest Position</th>
+
+          <ng-template [ngIf]="showMooLaInfo">
+            <th [class.active]="isSortActive('mooLa')"
+                (click)="changeSort('mooLa', true)"
+                class="sortTarget">
+              Moo-La</th>
+            <th [class.active]="isSortActive('mooLaBudget')"
+                (click)="changeSort('mooLaBudget', true)"
+                class="sortTarget">
+              Budget</th>
+            <th [class.active]="isSortActive('mooLaDisbursed')"
+                (click)="changeSort('mooLaDisbursed', true)"
+                class="sortTarget">
+              Handed Out</th>
+          </ng-template>
+          <th *ngIf="!showMooLaInfo && authService.businessCan('useMooLa')">
+            Grant
+          </th>
+
+          <ng-template [ngIf]="showLastUpdatedInfo">
+            <th [class.active]="isSortActive('lastUpdated')"
+                (click)="changeSort('lastUpdated', true)"
+                class="sortTarget">
+              Last Updated</th>
+          </ng-template>
+
+          <ng-template [ngIf]="showTrainingInfo && authService.businessCan('useTraining')">
+            <th [class.active]="isSortActive(position.positionId)"
+                (click)="changeSort(position.positionId, true)"
+                class="sortTarget"
+                *ngFor="let position of sampleRecord.scoresList">
+              {{ position.title }}
+            </th>
+          </ng-template>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of employees$ | async; trackBy: trackByEmployee"
+            class="employeeRecord"
+            [ngClass]='getRecordClasses(record)'>
+          <td class="photo">
+            <oc-profile-photo size="2em">
+              <img  [src]="photoService.getSizedUrl({ employee: record.employee }, 'avatar')"
+                    alt="{{ record.employee.name }}'s profile photo">
+            </oc-profile-photo>
+          </td>
+          <td class="name" [routerLink]="['/employee', record.employee.id]">
+            {{ record.employee.getName() }}
+            <sup class="indicator newMessageIndicator fas fa-asterisk"></sup>
+            <sup class="indicator notGroupMeConnectedIndicator fas fa-phone-slash"></sup>
+          </td>
+          <td class="highestPosition">{{ record.employee.getPositionString() }}</td>
+
+          <ng-template [ngIf]="showMooLaInfo">
+            <td class="mooLa"
+                [class.noValue]="!record.employee.mooLa">
+              {{ record.employee.mooLa || 0 }}
+              <div class="mooLaActions">
+                <button [disabled]="!authService.can('grantMooLa', record.employee)" (click)="grantMooLa(record.employee)">Grant</button>
+                <button [disabled]="!authService.can('supplyMooLa', record.employee)" (click)="supplyMooLa(record.employee)">Supply</button>
+                <button [disabled]="!authService.can('chargeMooLa', record.employee)" (click)="chargeMooLa(record.employee)">Charge</button>
+              </div>
+            </td>
+            <td class="mooLaBudget"
+                [class.noValue]="!record.employee.mooLaBudget">
+              <oc-infinite-value [value]="mooLaService.getBudgetOrInfinity(record.employee)"></oc-infinite-value>
+            </td>
+            <td class="mooLaDisbursed"
+                [class.noValue]="!record.employee.mooLaDisbursed">
+              {{ record.employee.mooLaDisbursed || 0 }}
+            </td>
+          </ng-template>
+          <td *ngIf="!showMooLaInfo && authService.businessCan('useMooLa')">
+            <button class="dark"
+              (click)="grantMooLa(record.employee)"
+              *ngIf="authService.can('grantMooLa', record.employee)">
+              <i class="fas fa-donate"></i>
+            </button>
+          </td>
+
+          <ng-template [ngIf]="showLastUpdatedInfo">
+            <td class="lastUpdated">{{ record.lastUpdatedString }}</td>
+          </ng-template>
+
+          <ng-template [ngIf]="showTrainingInfo && authService.businessCan('useTraining')">
+            <div class="scoreList">
+              <td *ngFor="let score of record.scoresList">
+                <span class="score" [ngClass]="score.classes">{{ score.score || 0 }}</span>
+              </td>
+            </div>
+          </ng-template>
+        </tr>
+        <tr id="noResults"><td colspan="100">
+          <i class="fas fa-user-astronaut"></i>
+          <br>
+          <p>Have you looked behind the moon for your missing people?</p>
+        </td></tr>
+
+        <tr *ngIf="filterResults as stats"><td id="truncatingMessage" colspan="100">
+          Showing <span>{{ stats.showing }}</span>
+
+          <ng-container *ngIf="stats.showing !== stats.total">
+            of <span>{{ stats.total }}</span> matching records
+          </ng-container>
+
+          <ng-container *ngIf="stats.showing === stats.total">
+            total records
+          </ng-container>
+        </td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #loading>
+    <div id="loadingMessage">
+      <i class="fas fa-yin-yang fa-spin"></i>
+      <p>Loading...</p>
+    </div>
+  </ng-template>
+</div>

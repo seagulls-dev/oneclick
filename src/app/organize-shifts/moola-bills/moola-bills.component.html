@@ -1,0 +1,26 @@
+<div class="reportCard" *ngIf="authService.employee$ | async as employee">
+	<div class="bigNumber">
+		<oc-infinite-value [value]="employeesBudget" prefix="$"></oc-infinite-value>
+	</div>
+	<div class="message">
+		<p>Moo-La left to grant this week, <b>{{ employee.getName() }}</b></p>
+	</div>
+</div>
+
+<div *ngIf="!bills.length; else billList" id="loadingBills" (click)="loadBills()">
+	<i class="fas fa-money-bill fa-3x" style="color: #45a4f1"></i>
+	<i class="fas fa-money-bill fa-3x" style="color: #b32e28"></i>
+	<i class="fas fa-money-bill fa-3x" style="color: #f5c94a"></i>
+	<i class="fas fa-money-bill fa-3x" style="color: #38772e"></i>
+	<p>Loading...</p>
+</div>
+<ng-template #billList>
+	<div *ngFor="let bill of bills; trackBy: trackByBillValue"
+		[class.disabled]="bill.value > employeesBudget"
+		 class="bill">
+		<img [src]="mooLaService.getSmallFileName(bill)"
+			 alt="${{ bill.value }} Moo-La Bill"
+			 [ocDraggable]="bill.value <= employeesBudget"
+			 [dragData]="bill"/>
+	</div>
+</ng-template>
